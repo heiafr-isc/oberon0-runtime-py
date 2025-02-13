@@ -9,7 +9,7 @@ import oberon0_runtime
 
 
 def test_true(capsys):
-    subprocess.run(["wat2wasm", "-o", "add.wasm", "../examples/add.wat"], check=True)
-    oberon0_runtime.run("add.wasm", "add", [29, 13])
+    subprocess.run(["wat2wasm", "-o", "tests/add.wasm", "examples/add.wat"], check=True)
+    oberon0_runtime.run("tests/add.wasm", "add", [29, 13])
     captured = capsys.readouterr()
     assert captured.out == "   42\n"
