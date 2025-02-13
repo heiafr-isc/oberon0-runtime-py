@@ -1,0 +1,32 @@
+# SPDX-FileCopyrightText: 2025 Jacques Supcik <jacques.supcik@hefr.ch>
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+#
+[project]
+name = "oberon0-runtime"
+version = "0.1.0"
+description = ""
+authors = [{ name = "Jacques Supcik", email = "jacques@supcik.net" }]
+readme = "README.md"
+
+[project.scripts]
+oberon0-rt = "oberon0_runtime:main"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+wasmtime = "^27.0.2"
+click = "^8.1.8"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.8.4"
+black = "^24.10.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+select = ["E", "F", "B", "Q", "N", "I", "UP", "PL", "RUF", "C90"]
