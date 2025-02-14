@@ -56,7 +56,12 @@ def write_ln():
     click.echo()
 
 
-def run(wasm_file: str, command: str, numbers: list[int]):
+# Main function
+@click.command()
+@click.argument("wasm-file", type=click.Path(exists=True))
+@click.argument("command")
+@click.argument("numbers", type=int, nargs=-1)
+def main(wasm_file, command, numbers):
     buffer.extend(numbers)
     store = Store()
     module = Module.from_file(store.engine, wasm_file)
@@ -87,15 +92,6 @@ def run(wasm_file: str, command: str, numbers: list[int]):
 
     cmd = instance.exports(store)[command]
     cmd(store)
-
-
-# Main function
-@click.command()
-@click.argument("wasm-file", type=click.Path(exists=True))
-@click.argument("command")
-@click.argument("numbers", type=int, nargs=-1)
-def main(wasm_file, command, numbers):
-    run(wasm_file, command, numbers)
 
 
 if __name__ == "__main__":
