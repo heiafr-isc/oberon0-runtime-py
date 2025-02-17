@@ -4,7 +4,7 @@
 
 (module
     (import "sys" "OpenInput" (func $open_input))
-    (import "sys" "ReadInt" (func $read_int (result i32)))
+    (import "sys" "ReadInt" (func $read_int (param i32)))
     (import "sys" "eot" (func $eot (result i32)))
     (import "sys" "WriteChar" (func $write_char (param i32)))
     (import "sys" "WriteInt" (func $write_int (param i32 i32)))

@@ -6,27 +6,29 @@
 name = "oberon0-runtime"
 version = "0.1.0"
 description = ""
-authors = [{ name = "Jacques Supcik", email = "jacques@supcik.net" }]
+authors = [{ name = "Jacques Supcik", email = "jacques.supcik@hefr.ch" }]
+license = { text = "Apache-2.0 OR MIT" }
 readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "wasmtime (>=29.0.0,<30.0.0)",
+    "click (>=8.1.8,<9.0.0)",
+    "pydantic (>=2.10.6,<3.0.0)"
+]
 
-[project.scripts]
-oberon0-rt = "oberon0_runtime:main"
-
-[tool.poetry.dependencies]
-python = "^3.12"
-wasmtime = "^27.0.2"
-click = "^8.1.8"
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.8.4"
-black = "^24.10.0"
+black = "^25.1.0"
+ruff = "^0.9.6"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.4"
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[project.scripts]
+oberon0-rt = "oberon0_runtime:main"
 
 [tool.ruff]
-select = ["E", "F", "B", "Q", "N", "I", "UP", "PL", "RUF", "C90"]
+lint.select = ["E", "F", "B", "Q", "N", "I", "UP", "PL", "RUF", "C90"]
