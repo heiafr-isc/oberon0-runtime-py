@@ -13,7 +13,7 @@
     (import "env" "__stack_pointer" (global $sp (mut i32)))
 
     (func (export "add")
-        ;; allocate space for 3 integers (x, y, z)
+        ;; allocate space for 3 integers (x, y, z). 3 * 4 bytes = 12 bytes
         (global.get $sp)
         (i32.const 12)
         i32.sub

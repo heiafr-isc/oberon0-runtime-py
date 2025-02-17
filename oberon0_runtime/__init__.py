@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0 OR MIT
 
+# Author : Jacques Supcik <jacques.supcik@hefr.ch>
 # Description: Oberon0 runtime for WASM module
 
 import sys
