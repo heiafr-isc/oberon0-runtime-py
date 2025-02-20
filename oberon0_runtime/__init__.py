@@ -44,6 +44,10 @@ app = typer.Typer()
 
 
 class Context(BaseModel):
+    """
+    Shared context for the runtime functions.
+    """
+
     model_config = ConfigDict(arbitrary_types_allowed=True)
     store: None | Store
     buffer: list[int]

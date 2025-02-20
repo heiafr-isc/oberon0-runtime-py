@@ -5,14 +5,14 @@
 
 import subprocess
 
-from click.testing import CliRunner
+from typer.testing import CliRunner
 
-from oberon0_runtime import main
+from oberon0_runtime import app
 
 
-def test_true():
+def test_cli():
     subprocess.run(["wat2wasm", "-o", "tests/add.wasm", "examples/add.wat"], check=True)
     runner = CliRunner()
-    result = runner.invoke(main, ["tests/add.wasm", "add", "29", "13"])
+    result = runner.invoke(app, ["tests/add.wasm", "add", "29", "13"])
     assert result.exit_code == 0
     assert result.output == "   42\n"

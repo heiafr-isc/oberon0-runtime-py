@@ -2,11 +2,5 @@
 #
 # SPDX-License-Identifier: Apache-2.0 OR MIT
 
-.DS_Store
-/.venv
-/.ruff_cache
-/dist
-/test/*/site
-__pycache__
-*.wasm
-/public
+make-doc:
+    poetry run sphinx-build -M html docs public
