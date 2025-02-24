@@ -22,33 +22,33 @@
         ;; call OpenInput
         (call $open_input)
 
-        ;; put the address of z (sp - 0) on the stack for the assignment z := x + y
-        (global.get $sp)
-        (i32.const 0)
-        i32.sub
-
-        ;; put the address of x (sp - 12) on the stack and call ReadInt
-        (global.get $sp)
-        (i32.const 12)
-        i32.sub
-        (call $read_int)
-
-        ;; put the address of y (sp - 8) on the stack and call ReadInt
+        ;; put the address of z (sp + 8) on the stack for the assignment z := x + y
         (global.get $sp)
         (i32.const 8)
-        i32.sub
+        i32.add
+
+        ;; put the address of x (sp) on the stack and call ReadInt
+        (global.get $sp)
+        (i32.const 0)
+        i32.add
+        (call $read_int)
+
+        ;; put the address of y (sp + 4) on the stack and call ReadInt
+        (global.get $sp)
+        (i32.const 4)
+        i32.add
         (call $read_int)
 
         ;; load x from memory
         (global.get $sp)
-        (i32.const 12)
-        i32.sub
+        (i32.const 0)
+        i32.add
         i32.load
 
         ;; load y from memory
         (global.get $sp)
-        (i32.const 8)
-        i32.sub
+        (i32.const 4)
+        i32.add
         i32.load
 
         ;; add x and y
@@ -59,8 +59,8 @@
 
         ;; load z from memory
         (global.get $sp)
-        (i32.const 0)
-        i32.sub
+        (i32.const 8)
+        i32.add
         i32.load
 
         ;; put 5 on the stack and call WriteInt
