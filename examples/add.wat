@@ -69,5 +69,10 @@
 
         ;; call WriteLn
         call $write_ln
+
+        global.get $sp
+        i32.const 12
+        i32.add
+        global.set $sp
     )
 )
