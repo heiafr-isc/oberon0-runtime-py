@@ -14,40 +14,40 @@
 
     (func (export "add")
         ;; allocate space for 3 integers (x, y, z). 3 * 4 bytes = 12 bytes
-        (global.get $sp)
-        (i32.const 12)
+        global.get $sp
+        i32.const 12
         i32.sub
-        (global.set $sp)
+        global.set $sp
 
         ;; call OpenInput
-        (call $open_input)
+        call $open_input
 
         ;; put the address of z (sp + 8) on the stack for the assignment z := x + y
-        (global.get $sp)
-        (i32.const 8)
+        global.get $sp
+        i32.const 8
         i32.add
 
         ;; put the address of x (sp) on the stack and call ReadInt
-        (global.get $sp)
-        (i32.const 0)
+        global.get $sp
+        i32.const 0
         i32.add
-        (call $read_int)
+        call $read_int
 
         ;; put the address of y (sp + 4) on the stack and call ReadInt
-        (global.get $sp)
-        (i32.const 4)
+        global.get $sp
+        i32.const 4
         i32.add
-        (call $read_int)
+        call $read_int
 
         ;; load x from memory
-        (global.get $sp)
-        (i32.const 0)
+        global.get $sp
+        i32.const 0
         i32.add
         i32.load
 
         ;; load y from memory
-        (global.get $sp)
-        (i32.const 4)
+        global.get $sp
+        i32.const 4
         i32.add
         i32.load
 
@@ -58,16 +58,16 @@
         i32.store
 
         ;; load z from memory
-        (global.get $sp)
-        (i32.const 8)
+        global.get $sp
+        i32.const 8
         i32.add
         i32.load
 
         ;; put 5 on the stack and call WriteInt
-        (i32.const 5)
-        (call $write_int)
+        i32.const 5
+        call $write_int
 
         ;; call WriteLn
-        (call $write_ln)
+        call $write_ln
     )
 )
