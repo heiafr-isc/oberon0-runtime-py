@@ -70,6 +70,7 @@
         ;; call WriteLn
         call $write_ln
 
+        ;; free stack space
         global.get $sp
         i32.const 12
         i32.add
