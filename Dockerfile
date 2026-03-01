@@ -1,14 +1,17 @@
-# SPDX-FileCopyrightText: 2025 Jacques Supcik <jacques.supcik@hefr.ch>
+# SPDX-FileCopyrightText: 2026 Jacques Supcik <jacques.supcik@hefr.ch>
 #
-# SPDX-License-Identifier: Apache-2.0 OR MIT
+# SPDX-License-Identifier: MIT
 
-FROM python:3.12
+FROM python:3.13
 
 WORKDIR /app
-COPY . /app/
+COPY src /app/src
+COPY pyproject.toml /app/pyproject.toml
+COPY README.md /app/README.md
 
-RUN pip install poetry
-RUN poetry install
+RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR="/usr/local/bin" sh
+RUN uv sync --no-dev
+RUN uv tool install .
 
-ENTRYPOINT [ "poetry", "run", "oberon0-rt" ]
+ENTRYPOINT [ "/root/.local/bin/oberon0-rt" ]
 CMD []
