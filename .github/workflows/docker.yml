@@ -16,10 +16,13 @@ env:
 jobs:
     build-docker:
         runs-on: ubuntu-latest
-        if: >
+        if: >-
             github.event.workflow_run.conclusion == 'success' &&
             github.event.workflow_run.event == 'push' &&
-            github.event.workflow_run.head_branch == 'main'
+            (
+                github.event.workflow_run.head_branch == 'main' ||
+                startsWith(github.event.workflow_run.head_branch, 'v')
+            )
         steps:
             - name: Checkout
               uses: actions/checkout@v6
@@ -41,17 +44,19 @@ jobs:
               with:
                   images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
                   tags: |
-                      type=ref,event=branch
-                      type=ref,event=pr
-                      type=semver,pattern={{version}}
-                      type=semver,pattern={{major}}.{{minor}}
+                      type=raw,value=latest,enable=${{ github.event.workflow_run.head_branch == 'main' }}
+                      type=raw,value=main,enable=${{ github.event.workflow_run.head_branch == 'main' }}
+                      type=raw,value=${{ github.event.workflow_run.head_branch }},enable=${{ startsWith(github.event.workflow_run.head_branch, 'v') }}
+                      type=sha,format=short
             - name: Build and push
               uses: docker/build-push-action@v6
               with:
                   context: .
-                  platforms: linux/amd64,linux/arm64,linux/arm/v7
+                  platforms: linux/amd64,linux/arm64
                   push: true
                   tags: ${{ steps.meta.outputs.tags }}
                   labels: ${{ steps.meta.outputs.labels }}
+                  provenance: true
+                  sbom: true
                   cache-from: type=gha
                   cache-to: type=gha,mode=max
