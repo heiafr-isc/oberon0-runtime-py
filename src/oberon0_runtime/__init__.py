@@ -166,7 +166,9 @@ def run(
     try:
         module = Module(context.store.engine, wasm_file.read())
     except FileNotFoundError:
-        print(f"[bold red]Error: WASM file '{wasm_file.name}' not found[/bold red]")
+        console.print(
+            f"[bold red]Error: WASM file '{wasm_file.name}' not found[/bold red]"
+        )
         raise typer.Exit(code=_ReturnCode.FILE_NOT_FOUND.value) from None
 
     f_open_input = Func(context.store, FuncType([], []), _open_input)
@@ -201,11 +203,13 @@ def run(
     try:
         cmd = instance.exports(context.store)[command]
         if not isinstance(cmd, Func):
-            print(f"[bold red]Error: '{command}' is not a callable function[/bold red]")
+            console.print(
+                f"[bold red]Error: '{command}' is not a callable function[/bold red]"
+            )
             raise typer.Exit(code=_ReturnCode.COMMAND_NOT_FOUND.value)
         cmd(context.store)
     except KeyError:
-        print(f"[bold red]Error: command '{command}' not found[/bold red]")
+        console.print(f"[bold red]Error: command '{command}' not found[/bold red]")
         raise typer.Exit(code=_ReturnCode.COMMAND_NOT_FOUND.value) from None
 
 
