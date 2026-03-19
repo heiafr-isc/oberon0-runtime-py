@@ -37,23 +37,23 @@
         i32.const 1
         i32.store
 
-        (block $b1
-            ;; check if i >= max (initial check)
-            global.get $sp
-            i32.const 0
-            i32.add
-            i32.load
-
-            global.get $sp
-            i32.const 4
-            i32.add
-            i32.load
-
-            i32.ge_s
-            br_if $b1
-
-            ;; While loop
+        ;; While loop
+        (block $b1 ;; used to break out of the loop when i >= max
             (loop $l1
+                ;; check if i >= max (initial check)
+                global.get $sp
+                i32.const 0
+                i32.add
+                i32.load
+
+                global.get $sp
+                i32.const 4
+                i32.add
+                i32.load
+
+                i32.ge_s
+                br_if $b1
+
                 ;; print i
                 global.get $sp
                 i32.const 0
@@ -77,20 +77,7 @@
                 i32.const 2
                 i32.add
                 i32.store
-
-                ;; repeat while i < max
-                global.get $sp
-                i32.const 0
-                i32.add
-                i32.load
-
-                global.get $sp
-                i32.const 4
-                i32.add
-                i32.load
-
-                i32.lt_s
-                br_if $l1
+                br $l1
             )
         )
 
