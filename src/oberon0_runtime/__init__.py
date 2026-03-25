@@ -115,7 +115,7 @@ def _write_ln() -> None:
 # Main function
 @app.command()
 def info(
-    wasm_file: Annotated[typer.FileBinaryRead, typer.Argument()],
+    wasm_file: Annotated[Path, typer.Argument()],
 ) -> None:
     """
     Print the list of commands available in the given WASM file.
@@ -123,7 +123,8 @@ def info(
     store = Store()
     engine = store.engine
     try:
-        module = Module(engine, wasm_file.read())
+        f = open(wasm_file, "rb")
+        module = Module(engine, f.read())
     except FileNotFoundError:
         console.print(
             f"[bold red]Error: WASM file '{wasm_file.name}'" " not found[/bold red]"
@@ -210,6 +211,19 @@ def run(
         cmd(context.store)
     except KeyError:
         console.print(f"[bold red]Error: command '{command}' not found[/bold red]")
+
+        commands = []
+        for i in module.exports:
+            if isinstance(i.type, FuncType):
+                commands.append(f"- {i.name}")
+
+        panel = Panel(
+            "\n".join(commands),
+            title=f"[bold green]Commands available in '{wasm_file.name}'[/bold green]",
+            border_style="green",
+        )
+        console.print(panel)
+
         raise typer.Exit(code=_ReturnCode.COMMAND_NOT_FOUND.value) from None
 
 
